@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="theme-color" content="#0b0f1a" />
+  <title>Vergaderstukken zoeken</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0b0f1a;
+      color: #e2e8f0;
+      font-family: 'DM Sans', 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      max-width: 480px;
+      margin: 0 auto;
+      padding-bottom: 48px;
+    }
+
+    #header {
+      padding: 24px 18px 18px;
+      background: linear-gradient(180deg, #0f172a 0%, #0b0f1a 100%);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .eyebrow {
+      font-size: 10px;
+      color: #2563eb;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    h1 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #f1f5f9;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+
+    #badges {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      margin-bottom: 13px;
+    }
+
+    .badge {
+      font-size: 10px;
+      border-radius: 20px;
+      padding: 2px 8px;
+      font-weight: 500;
+      border: 1px solid;
+    }
+
+    .badge-blue  { background: rgba(37,99,235,0.2);  color: #93c5fd; border-color: rgba(37,99,235,0.3); }
+    .badge-green { background: rgba(5,150,105,0.2);  color: #6ee7b7; border-color: rgba(5,150,105,0.3); }
+    .badge-purple{ background: rgba(124,58,237,0.2); color: #c4b5fd; border-color: rgba(124,58,237,0.3); }
+
+    #search-form {
+      display: flex;
+      gap: 8px;
+    }
+
+    #search-input {
+      flex: 1;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+      padding: 11px 13px;
+      font-size: 15px;
+      color: #f1f5f9;
+      outline: none;
+      -webkit-appearance: none;
+      font-family: inherit;
+    }
+
+    #search-input::placeholder { color: #475569; }
+    #search-input:focus { border-color: rgba(37,99,235,0.5); }
+
+    #search-btn {
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 11px 18px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      flex-shrink: 0;
+      font-family: inherit;
+      transition: background 0.15s;
+    }
+
+    #search-btn:disabled { background: #1e3a6e; cursor: wait; }
+
+    #body { padding: 14px 16px 0; }
+
+    #loading {
+      text-align: center;
+      padding: 48px 0;
+      display: none;
+    }
+
+    #loading .spinner {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    #loading .label {
+      font-size: 13px;
+      color: #475569;
+      margin-bottom: 6px;
+    }
+
+    #loading .sublabel {
+      font-size: 11px;
+      color: #334155;
+    }
+
+    #error-box {
+      background: #450a0a;
+      border: 1px solid #7f1d1d;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 13px;
+      color: #fca5a5;
+      margin-bottom: 14px;
+      display: none;
+    }
+
+    #empty-state {
+      text-align: center;
+      padding: 52px 20px;
+    }
+
+    #empty-state .icon { font-size: 32px; margin-bottom: 12px; }
+    #empty-state .title { font-size: 14px; font-weight: 600; color: #475569; margin-bottom: 6px; }
+    #empty-state .desc { font-size: 12px; color: #334155; line-height: 1.7; }
+
+    .section-label {
+      font-size: 10px;
+      color: #475569;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .result-count { font-size: 11px; color: #475569; }
+
+    .doc-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 13px 15px;
+      margin-bottom: 9px;
+      cursor: default;
+      transition: border-color 0.15s;
+    }
+
+    .doc-card.clickable { cursor: pointer; }
+    .doc-card.clickable:active { border-color: rgba(37,99,235,0.4); }
+
+    .doc-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 5px;
+      align-items: flex-start;
+    }
+
+    .doc-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #e2e8f0;
+      line-height: 1.35;
+      flex: 1;
+    }
+
+    .doc-date {
+      font-size: 11px;
+      color: #64748b;
+      white-space: nowrap;
+      margin-top: 1px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .doc-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 7px;
+    }
+
+    .tag {
+      font-size: 11px;
+      border-radius: 6px;
+      padding: 2px 7px;
+    }
+
+    .tag-org  { background: rgba(37,99,235,0.18); color: #93c5fd; }
+    .tag-type { background: rgba(255,255,255,0.06); color: #94a3b8; }
+
+    .doc-desc {
+      font-size: 12px;
+      color: #64748b;
+      line-height: 1.5;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .doc-link {
+      margin-top: 7px;
+      font-size: 11px;
+      color: #3b82f6;
+    }
+
+    #no-results {
+      text-align: center;
+      padding: 28px 0;
+      color: #475569;
+      font-size: 13px;
+      display: none;
+    }
+
+    #external-section { margin-top: 20px; display: none; }
+
+    .ext-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 12px;
+      padding: 13px 15px;
+      margin-bottom: 9px;
+      text-decoration: none;
+    }
+
+    .ext-label { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+    .ext-sub   { font-size: 11px; color: #475569; }
+    .ext-arrow { font-size: 14px; font-weight: 700; }
+
+    .ext-mrdh {
+      background: rgba(5,150,105,0.08);
+      border: 1px solid rgba(5,150,105,0.25);
+    }
+    .ext-mrdh .ext-label, .ext-mrdh .ext-arrow { color: #059669; }
+
+    .ext-vra {
+      background: rgba(124,58,237,0.08);
+      border: 1px solid rgba(124,58,237,0.25);
+    }
+    .ext-vra .ext-label, .ext-vra .ext-arrow { color: #7c3aed; }
+  </style>
+</head>
+<body>
+
+<div id="header">
+  <div class="eyebrow">Bestuurlijke Stukken</div>
+  <h1>Vergaderstukken zoeken</h1>
+
+  <div id="badges">
+    <span class="badge badge-blue">Gemeenteraden</span>
+    <span class="badge badge-blue">Provinciale Staten</span>
+    <span class="badge badge-green">MRDH ↗</span>
+    <span class="badge badge-purple">VRA ↗</span>
+  </div>
+
+  <form id="search-form">
+    <input
+      id="search-input"
+      type="search"
+      placeholder="bijv. vervoerplan, concessie, HOV…"
+      autocomplete="off"
+      autocorrect="off"
+      spellcheck="false"
+    />
+    <button id="search-btn" type="submit">Zoek</button>
+  </form>
+</div>
+
+<div id="body">
+  <div id="error-box"></div>
+
+  <div id="loading">
+    <div class="spinner">⏳</div>
+    <div class="label">Zoeken in raadsstukken…</div>
+    <div class="sublabel">Dit kan ~10 seconden duren</div>
+  </div>
+
+  <div id="empty-state">
+    <div class="icon">🔍</div>
+    <div class="title">Zoek in vergaderstukken</div>
+    <div class="desc">
+      Doorzoekt gemeenteraden en provincies<br>
+      via Open Raadsinformatie (ORI).<br>
+      Met directe links naar MRDH en VRA.
+    </div>
+  </div>
+
+  <div id="results-section" style="display:none">
+    <div class="section-header">
+      <div class="section-label">Gemeenteraden &amp; Provincies</div>
+      <div class="result-count" id="result-count"></div>
+    </div>
+    <div id="results-list"></div>
+    <div id="no-results">Geen resultaten gevonden.</div>
+  </div>
+
+  <div id="external-section">
+    <div class="section-label">Zoek ook op externe portalen</div>
+    <a id="ext-mrdh" class="ext-link ext-mrdh" target="_blank" rel="noopener noreferrer">
+      <div>
+        <div class="ext-label">MRDH</div>
+        <div class="ext-sub">Metropoolregio Rotterdam Den Haag</div>
+      </div>
+      <div class="ext-arrow">↗</div>
+    </a>
+    <a id="ext-vra" class="ext-link ext-vra" target="_blank" rel="noopener noreferrer">
+      <div>
+        <div class="ext-label">VRA</div>
+        <div class="ext-sub">Vervoerregio Amsterdam</div>
+      </div>
+      <div class="ext-arrow">↗</div>
+    </a>
+  </div>
+</div>
+
+<script>
+  const form        = document.getElementById('search-form');
+  const input       = document.getElementById('search-input');
+  const btn         = document.getElementById('search-btn');
+  const loading     = document.getElementById('loading');
+  const emptyState  = document.getElementById('empty-state');
+  const errorBox    = document.getElementById('error-box');
+  const resultsSection = document.getElementById('results-section');
+  const resultsList = document.getElementById('results-list');
+  const resultCount = document.getElementById('result-count');
+  const noResults   = document.getElementById('no-results');
+  const extSection  = document.getElementById('external-section');
+  const extMrdh     = document.getElementById('ext-mrdh');
+  const extVra      = document.getElementById('ext-vra');
+
+  function formatDate(str) {
+    if (!str) return null;
+    try {
+      return new Intl.DateTimeFormat('nl-NL', {
+        day: 'numeric', month: 'short', year: 'numeric'
+      }).format(new Date(str));
+    } catch { return str.slice(0, 10); }
+  }
+
+  function setLoading(on) {
+    btn.disabled = on;
+    btn.textContent = on ? '···' : 'Zoek';
+    loading.style.display = on ? 'block' : 'none';
+  }
+
+  function showError(msg) {
+    errorBox.textContent = msg;
+    errorBox.style.display = 'block';
+  }
+
+  function clearError() {
+    errorBox.textContent = '';
+    errorBox.style.display = 'none';
+  }
+
+  function renderResults(docs) {
+    resultsList.innerHTML = '';
+    noResults.style.display = 'none';
+
+    if (docs.length === 0) {
+      noResults.style.display = 'block';
+      resultCount.textContent = '0 resultaten';
+      return;
+    }
+
+    resultCount.textContent = docs.length + ' resultaten';
+
+    docs.forEach(doc => {
+      const card = document.createElement('div');
+      card.className = 'doc-card' + (doc.url ? ' clickable' : '');
+      if (doc.url) card.addEventListener('click', () => window.open(doc.url, '_blank'));
+
+      const date = formatDate(doc.date);
+      const hasTags = doc.org || (doc.type && doc.type !== doc.title);
+
+      card.innerHTML = `
+        <div class="doc-top">
+          <div class="doc-title">${esc(doc.title || 'Onbekend document')}</div>
+          ${date ? `<div class="doc-date">${esc(date)}</div>` : ''}
+        </div>
+        ${hasTags ? `<div class="doc-tags">
+          ${doc.org ? `<span class="tag tag-org">${esc(doc.org)}</span>` : ''}
+          ${doc.type && doc.type !== doc.title ? `<span class="tag tag-type">${esc(doc.type)}</span>` : ''}
+        </div>` : ''}
+        ${doc.desc ? `<div class="doc-desc">${esc(doc.desc)}</div>` : ''}
+        ${doc.url ? `<div class="doc-link">↗ Document openen</div>` : ''}
+      `;
+
+      resultsList.appendChild(card);
+    });
+  }
+
+  function esc(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  async function doSearch(query) {
+    clearError();
+    emptyState.style.display = 'none';
+    resultsSection.style.display = 'none';
+    extSection.style.display = 'none';
+    setLoading(true);
+
+    // Externe links alvast instellen
+    extMrdh.href = 'https://mrdh.notubiz.nl/zoeken?zoektekst=' + encodeURIComponent(query);
+    extVra.href  = 'https://vervoerregio.bestuurlijkeinformatie.nl/Vergaderingen/Index?q=' + encodeURIComponent(query);
+
+    const prompt = `Voer een HTTP POST uit naar https://api.openraadsinformatie.nl/v1/elastic/ori_*/_search met Content-Type application/json en deze body:
+
+{"from":0,"size":15,"query":{"multi_match":{"query":"${query.replace(/"/g, '')}","fields":["text","name","description","title"],"type":"best_fields"}},"sort":[{"start_date":{"order":"desc","unmapped_type":"date"}}],"_source":["name","description","start_date","organization_name","classification","media_urls"]}
+
+Retourneer ALLEEN een JSON-array zonder uitleg of markdown. Formaat per item:
+{"title":"...","org":"...","date":"YYYY-MM-DD of null","type":"...","desc":"... of null","url":"... of null"}
+
+Haal de url uit media_urls[0].url als die bestaat. Maximaal 15 items, meest recent eerst. Bij geen resultaten of fout: []`;
+
+    try {
+      const resp = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 4000,
+          messages: [{ role: 'user', content: prompt }]
+        })
+      });
+
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({}));
+        throw new Error(err?.error?.message || 'API fout ' + resp.status);
+      }
+
+      const data = await resp.json();
+      let raw = (data.content?.find(b => b.type === 'text')?.text || '[]').trim();
+      raw = raw.replace(/^```json?\s*/i, '').replace(/\s*```$/i, '').trim();
+
+      let docs = [];
+      try { docs = JSON.parse(raw); } catch { docs = []; }
+      if (!Array.isArray(docs)) docs = [];
+
+      renderResults(docs);
+      resultsSection.style.display = 'block';
+    } catch (e) {
+      showError(e.message);
+    } finally {
+      setLoading(false);
+      extSection.style.display = 'block';
+    }
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const q = input.value.trim();
+    if (q) doSearch(q);
+  });
+</script>
+</body>
+</html>
