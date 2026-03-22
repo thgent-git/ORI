@@ -59,14 +59,11 @@
       border: 1px solid;
     }
 
-    .badge-blue  { background: rgba(37,99,235,0.2);  color: #93c5fd; border-color: rgba(37,99,235,0.3); }
-    .badge-green { background: rgba(5,150,105,0.2);  color: #6ee7b7; border-color: rgba(5,150,105,0.3); }
-    .badge-purple{ background: rgba(124,58,237,0.2); color: #c4b5fd; border-color: rgba(124,58,237,0.3); }
+    .badge-blue   { background: rgba(37,99,235,0.2);  color: #93c5fd; border-color: rgba(37,99,235,0.3); }
+    .badge-green  { background: rgba(5,150,105,0.2);  color: #6ee7b7; border-color: rgba(5,150,105,0.3); }
+    .badge-purple { background: rgba(124,58,237,0.2); color: #c4b5fd; border-color: rgba(124,58,237,0.3); }
 
-    #search-form {
-      display: flex;
-      gap: 8px;
-    }
+    #search-form { display: flex; gap: 8px; }
 
     #search-input {
       flex: 1;
@@ -95,34 +92,17 @@
       cursor: pointer;
       flex-shrink: 0;
       font-family: inherit;
-      transition: background 0.15s;
+      min-width: 72px;
     }
 
     #search-btn:disabled { background: #1e3a6e; cursor: wait; }
 
     #body { padding: 14px 16px 0; }
 
-    #loading {
-      text-align: center;
-      padding: 48px 0;
-      display: none;
-    }
-
-    #loading .spinner {
-      font-size: 28px;
-      margin-bottom: 12px;
-    }
-
-    #loading .label {
-      font-size: 13px;
-      color: #475569;
-      margin-bottom: 6px;
-    }
-
-    #loading .sublabel {
-      font-size: 11px;
-      color: #334155;
-    }
+    #loading { text-align: center; padding: 48px 0; display: none; }
+    .spinner { font-size: 28px; margin-bottom: 12px; }
+    .load-label { font-size: 13px; color: #475569; margin-bottom: 6px; }
+    .load-sub { font-size: 11px; color: #334155; }
 
     #error-box {
       background: #450a0a;
@@ -133,33 +113,16 @@
       color: #fca5a5;
       margin-bottom: 14px;
       display: none;
+      line-height: 1.5;
     }
 
-    #empty-state {
-      text-align: center;
-      padding: 52px 20px;
-    }
-
+    #empty-state { text-align: center; padding: 52px 20px; }
     #empty-state .icon { font-size: 32px; margin-bottom: 12px; }
     #empty-state .title { font-size: 14px; font-weight: 600; color: #475569; margin-bottom: 6px; }
     #empty-state .desc { font-size: 12px; color: #334155; line-height: 1.7; }
 
-    .section-label {
-      font-size: 10px;
-      color: #475569;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
+    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .section-label { font-size: 10px; color: #475569; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
     .result-count { font-size: 11px; color: #475569; }
 
     .doc-card {
@@ -168,74 +131,42 @@
       border-radius: 12px;
       padding: 13px 15px;
       margin-bottom: 9px;
-      cursor: default;
-      transition: border-color 0.15s;
     }
 
     .doc-card.clickable { cursor: pointer; }
-    .doc-card.clickable:active { border-color: rgba(37,99,235,0.4); }
+    .doc-card.clickable:active { border-color: rgba(37,99,235,0.4); background: rgba(255,255,255,0.06); }
 
-    .doc-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 5px;
-      align-items: flex-start;
-    }
+    .doc-top { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 5px; align-items: flex-start; }
+    .doc-title { font-size: 13px; font-weight: 600; color: #e2e8f0; line-height: 1.35; flex: 1; }
+    .doc-date { font-size: 11px; color: #64748b; white-space: nowrap; margin-top: 1px; font-variant-numeric: tabular-nums; }
 
-    .doc-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: #e2e8f0;
-      line-height: 1.35;
-      flex: 1;
-    }
-
-    .doc-date {
-      font-size: 11px;
-      color: #64748b;
-      white-space: nowrap;
-      margin-top: 1px;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .doc-tags {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-bottom: 7px;
-    }
-
-    .tag {
-      font-size: 11px;
-      border-radius: 6px;
-      padding: 2px 7px;
-    }
-
+    .doc-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 7px; }
+    .tag { font-size: 11px; border-radius: 6px; padding: 2px 7px; }
     .tag-org  { background: rgba(37,99,235,0.18); color: #93c5fd; }
     .tag-type { background: rgba(255,255,255,0.06); color: #94a3b8; }
 
     .doc-desc {
-      font-size: 12px;
-      color: #64748b;
-      line-height: 1.5;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
+      font-size: 12px; color: #64748b; line-height: 1.5;
+      overflow: hidden; display: -webkit-box;
+      -webkit-line-clamp: 2; -webkit-box-orient: vertical;
     }
 
-    .doc-link {
-      margin-top: 7px;
-      font-size: 11px;
-      color: #3b82f6;
-    }
+    .doc-link { margin-top: 7px; font-size: 11px; color: #3b82f6; }
 
-    #no-results {
-      text-align: center;
-      padding: 28px 0;
-      color: #475569;
+    #no-results { text-align: center; padding: 28px 0; color: #475569; font-size: 13px; display: none; }
+
+    #load-more-btn {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 12px;
+      color: #94a3b8;
       font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 4px;
+      font-family: inherit;
       display: none;
     }
 
@@ -255,16 +186,10 @@
     .ext-sub   { font-size: 11px; color: #475569; }
     .ext-arrow { font-size: 14px; font-weight: 700; }
 
-    .ext-mrdh {
-      background: rgba(5,150,105,0.08);
-      border: 1px solid rgba(5,150,105,0.25);
-    }
+    .ext-mrdh { background: rgba(5,150,105,0.08); border: 1px solid rgba(5,150,105,0.25); }
     .ext-mrdh .ext-label, .ext-mrdh .ext-arrow { color: #059669; }
 
-    .ext-vra {
-      background: rgba(124,58,237,0.08);
-      border: 1px solid rgba(124,58,237,0.25);
-    }
+    .ext-vra { background: rgba(124,58,237,0.08); border: 1px solid rgba(124,58,237,0.25); }
     .ext-vra .ext-label, .ext-vra .ext-arrow { color: #7c3aed; }
   </style>
 </head>
@@ -273,23 +198,16 @@
 <div id="header">
   <div class="eyebrow">Bestuurlijke Stukken</div>
   <h1>Vergaderstukken zoeken</h1>
-
   <div id="badges">
     <span class="badge badge-blue">Gemeenteraden</span>
     <span class="badge badge-blue">Provinciale Staten</span>
     <span class="badge badge-green">MRDH ↗</span>
     <span class="badge badge-purple">VRA ↗</span>
   </div>
-
   <form id="search-form">
-    <input
-      id="search-input"
-      type="search"
+    <input id="search-input" type="search"
       placeholder="bijv. vervoerplan, concessie, HOV…"
-      autocomplete="off"
-      autocorrect="off"
-      spellcheck="false"
-    />
+      autocomplete="off" autocorrect="off" spellcheck="false" />
     <button id="search-btn" type="submit">Zoek</button>
   </form>
 </div>
@@ -299,8 +217,8 @@
 
   <div id="loading">
     <div class="spinner">⏳</div>
-    <div class="label">Zoeken in raadsstukken…</div>
-    <div class="sublabel">Dit kan ~10 seconden duren</div>
+    <div class="load-label">Zoeken in raadsstukken…</div>
+    <div class="load-sub">via Open Raadsinformatie</div>
   </div>
 
   <div id="empty-state">
@@ -320,41 +238,52 @@
     </div>
     <div id="results-list"></div>
     <div id="no-results">Geen resultaten gevonden.</div>
+    <button id="load-more-btn">Meer laden</button>
   </div>
 
   <div id="external-section">
-    <div class="section-label">Zoek ook op externe portalen</div>
+    <div class="section-label" style="margin-bottom:10px">Zoek ook op externe portalen</div>
     <a id="ext-mrdh" class="ext-link ext-mrdh" target="_blank" rel="noopener noreferrer">
-      <div>
-        <div class="ext-label">MRDH</div>
-        <div class="ext-sub">Metropoolregio Rotterdam Den Haag</div>
-      </div>
+      <div><div class="ext-label">MRDH</div><div class="ext-sub">Metropoolregio Rotterdam Den Haag</div></div>
       <div class="ext-arrow">↗</div>
     </a>
     <a id="ext-vra" class="ext-link ext-vra" target="_blank" rel="noopener noreferrer">
-      <div>
-        <div class="ext-label">VRA</div>
-        <div class="ext-sub">Vervoerregio Amsterdam</div>
-      </div>
+      <div><div class="ext-label">VRA</div><div class="ext-sub">Vervoerregio Amsterdam</div></div>
       <div class="ext-arrow">↗</div>
     </a>
   </div>
 </div>
 
 <script>
-  const form        = document.getElementById('search-form');
-  const input       = document.getElementById('search-input');
-  const btn         = document.getElementById('search-btn');
-  const loading     = document.getElementById('loading');
-  const emptyState  = document.getElementById('empty-state');
-  const errorBox    = document.getElementById('error-box');
-  const resultsSection = document.getElementById('results-section');
-  const resultsList = document.getElementById('results-list');
-  const resultCount = document.getElementById('result-count');
-  const noResults   = document.getElementById('no-results');
-  const extSection  = document.getElementById('external-section');
-  const extMrdh     = document.getElementById('ext-mrdh');
-  const extVra      = document.getElementById('ext-vra');
+  const ORI_URL  = 'https://api.openraadsinformatie.nl/v1/elastic/ori_*/_search';
+  const PAGE_SIZE = 15;
+
+  let currentQuery = '';
+  let currentFrom  = 0;
+  let totalHits    = 0;
+
+  const $ = id => document.getElementById(id);
+
+  const form           = $('search-form');
+  const input          = $('search-input');
+  const btn            = $('search-btn');
+  const loading        = $('loading');
+  const emptyState     = $('empty-state');
+  const errorBox       = $('error-box');
+  const resultsSection = $('results-section');
+  const resultsList    = $('results-list');
+  const resultCount    = $('result-count');
+  const noResults      = $('no-results');
+  const loadMoreBtn    = $('load-more-btn');
+  const extSection     = $('external-section');
+  const extMrdh        = $('ext-mrdh');
+  const extVra         = $('ext-vra');
+
+  function esc(s) {
+    return String(s || '')
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
 
   function formatDate(str) {
     if (!str) return null;
@@ -362,7 +291,7 @@
       return new Intl.DateTimeFormat('nl-NL', {
         day: 'numeric', month: 'short', year: 'numeric'
       }).format(new Date(str));
-    } catch { return str.slice(0, 10); }
+    } catch { return str.slice(0,10); }
   }
 
   function setLoading(on) {
@@ -372,7 +301,7 @@
   }
 
   function showError(msg) {
-    errorBox.textContent = msg;
+    errorBox.innerHTML = esc(msg);
     errorBox.style.display = 'block';
   }
 
@@ -381,109 +310,129 @@
     errorBox.style.display = 'none';
   }
 
-  function renderResults(docs) {
-    resultsList.innerHTML = '';
-    noResults.style.display = 'none';
+  function makeCard(hit) {
+    const s     = hit._source || {};
+    const title = s.name || s.title || 'Onbekend document';
+    const org   = s.organization_name || null;
+    const date  = formatDate(s.start_date);
+    const type  = s.classification || null;
+    const desc  = s.description || null;
+    const url   = (s.media_urls && s.media_urls[0] && s.media_urls[0].url) || null;
 
-    if (docs.length === 0) {
-      noResults.style.display = 'block';
-      resultCount.textContent = '0 resultaten';
-      return;
+    const card = document.createElement('div');
+    card.className = 'doc-card' + (url ? ' clickable' : '');
+    if (url) card.addEventListener('click', () => window.open(url, '_blank'));
+
+    const hasTags = org || (type && type !== title);
+
+    card.innerHTML =
+      '<div class="doc-top">' +
+        '<div class="doc-title">' + esc(title) + '</div>' +
+        (date ? '<div class="doc-date">' + esc(date) + '</div>' : '') +
+      '</div>' +
+      (hasTags ?
+        '<div class="doc-tags">' +
+          (org ? '<span class="tag tag-org">' + esc(org) + '</span>' : '') +
+          (type && type !== title ? '<span class="tag tag-type">' + esc(type) + '</span>' : '') +
+        '</div>' : '') +
+      (desc ? '<div class="doc-desc">' + esc(desc) + '</div>' : '') +
+      (url  ? '<div class="doc-link">↗ Document openen</div>' : '');
+
+    return card;
+  }
+
+  function updateLoadMore() {
+    const remaining = totalHits - currentFrom;
+    if (remaining > 0) {
+      loadMoreBtn.textContent = 'Meer laden (' + remaining + ' resterend)';
+      loadMoreBtn.style.display = 'block';
+    } else {
+      loadMoreBtn.style.display = 'none';
+    }
+  }
+
+  async function fetchORI(query, from) {
+    const resp = await fetch(ORI_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from: from,
+        size: PAGE_SIZE,
+        query: {
+          multi_match: {
+            query: query,
+            fields: ['text', 'name', 'description', 'title'],
+            type: 'best_fields'
+          }
+        },
+        sort: [{ start_date: { order: 'desc', unmapped_type: 'date' } }],
+        _source: ['name', 'description', 'start_date', 'organization_name', 'classification', 'media_urls']
+      })
+    });
+
+    if (!resp.ok) throw new Error('ORI API antwoordde met status ' + resp.status);
+    const data = await resp.json();
+    return {
+      total: (data.hits && data.hits.total && data.hits.total.value) || 0,
+      hits:  (data.hits && data.hits.hits) || []
+    };
+  }
+
+  async function doSearch(query, from) {
+    clearError();
+
+    if (from === 0) {
+      emptyState.style.display    = 'none';
+      resultsSection.style.display = 'none';
+      extSection.style.display    = 'none';
+      resultsList.innerHTML       = '';
+      noResults.style.display     = 'none';
+      loadMoreBtn.style.display   = 'none';
     }
 
-    resultCount.textContent = docs.length + ' resultaten';
-
-    docs.forEach(doc => {
-      const card = document.createElement('div');
-      card.className = 'doc-card' + (doc.url ? ' clickable' : '');
-      if (doc.url) card.addEventListener('click', () => window.open(doc.url, '_blank'));
-
-      const date = formatDate(doc.date);
-      const hasTags = doc.org || (doc.type && doc.type !== doc.title);
-
-      card.innerHTML = `
-        <div class="doc-top">
-          <div class="doc-title">${esc(doc.title || 'Onbekend document')}</div>
-          ${date ? `<div class="doc-date">${esc(date)}</div>` : ''}
-        </div>
-        ${hasTags ? `<div class="doc-tags">
-          ${doc.org ? `<span class="tag tag-org">${esc(doc.org)}</span>` : ''}
-          ${doc.type && doc.type !== doc.title ? `<span class="tag tag-type">${esc(doc.type)}</span>` : ''}
-        </div>` : ''}
-        ${doc.desc ? `<div class="doc-desc">${esc(doc.desc)}</div>` : ''}
-        ${doc.url ? `<div class="doc-link">↗ Document openen</div>` : ''}
-      `;
-
-      resultsList.appendChild(card);
-    });
-  }
-
-  function esc(str) {
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
-  }
-
-  async function doSearch(query) {
-    clearError();
-    emptyState.style.display = 'none';
-    resultsSection.style.display = 'none';
-    extSection.style.display = 'none';
     setLoading(true);
 
-    // Externe links alvast instellen
     extMrdh.href = 'https://mrdh.notubiz.nl/zoeken?zoektekst=' + encodeURIComponent(query);
     extVra.href  = 'https://vervoerregio.bestuurlijkeinformatie.nl/Vergaderingen/Index?q=' + encodeURIComponent(query);
 
-    const prompt = `Voer een HTTP POST uit naar https://api.openraadsinformatie.nl/v1/elastic/ori_*/_search met Content-Type application/json en deze body:
-
-{"from":0,"size":15,"query":{"multi_match":{"query":"${query.replace(/"/g, '')}","fields":["text","name","description","title"],"type":"best_fields"}},"sort":[{"start_date":{"order":"desc","unmapped_type":"date"}}],"_source":["name","description","start_date","organization_name","classification","media_urls"]}
-
-Retourneer ALLEEN een JSON-array zonder uitleg of markdown. Formaat per item:
-{"title":"...","org":"...","date":"YYYY-MM-DD of null","type":"...","desc":"... of null","url":"... of null"}
-
-Haal de url uit media_urls[0].url als die bestaat. Maximaal 15 items, meest recent eerst. Bij geen resultaten of fout: []`;
-
     try {
-      const resp = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-haiku-4-5-20251001',
-          max_tokens: 4000,
-          messages: [{ role: 'user', content: prompt }]
-        })
-      });
+      const result = await fetchORI(query, from);
 
-      if (!resp.ok) {
-        const err = await resp.json().catch(() => ({}));
-        throw new Error(err?.error?.message || 'API fout ' + resp.status);
+      totalHits   = result.total;
+      currentFrom = from + result.hits.length;
+      currentQuery = query;
+
+      if (from === 0) {
+        resultCount.textContent = totalHits.toLocaleString('nl-NL') + ' gevonden';
+        resultsSection.style.display = 'block';
       }
 
-      const data = await resp.json();
-      let raw = (data.content?.find(b => b.type === 'text')?.text || '[]').trim();
-      raw = raw.replace(/^```json?\s*/i, '').replace(/\s*```$/i, '').trim();
+      if (result.hits.length === 0 && from === 0) {
+        noResults.style.display = 'block';
+      } else {
+        result.hits.forEach(function(hit) {
+          resultsList.appendChild(makeCard(hit));
+        });
+      }
 
-      let docs = [];
-      try { docs = JSON.parse(raw); } catch { docs = []; }
-      if (!Array.isArray(docs)) docs = [];
+      updateLoadMore();
 
-      renderResults(docs);
-      resultsSection.style.display = 'block';
     } catch (e) {
-      showError(e.message);
+      showError('Fout bij ophalen: ' + e.message);
     } finally {
       setLoading(false);
       extSection.style.display = 'block';
     }
   }
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', function(e) {
     e.preventDefault();
-    const q = input.value.trim();
-    if (q) doSearch(q);
+    var q = input.value.trim();
+    if (q) doSearch(q, 0);
+  });
+
+  loadMoreBtn.addEventListener('click', function() {
+    doSearch(currentQuery, currentFrom);
   });
 </script>
 </body>
