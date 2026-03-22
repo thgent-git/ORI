@@ -121,39 +121,135 @@
     #empty-state .title { font-size: 14px; font-weight: 600; color: #475569; margin-bottom: 6px; }
     #empty-state .desc { font-size: 12px; color: #334155; line-height: 1.7; }
 
-    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-    .section-label { font-size: 10px; color: #475569; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      color: #475569;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
     .result-count { font-size: 11px; color: #475569; }
 
+    /* Doc cards */
     .doc-card {
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.08);
       border-radius: 12px;
       padding: 13px 15px;
       margin-bottom: 9px;
+      text-decoration: none;
+      display: block;
+      color: inherit;
     }
 
-    .doc-card.clickable { cursor: pointer; }
-    .doc-card.clickable:active { border-color: rgba(37,99,235,0.4); background: rgba(255,255,255,0.06); }
+    .doc-card.has-link {
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
 
-    .doc-top { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 5px; align-items: flex-start; }
-    .doc-title { font-size: 13px; font-weight: 600; color: #e2e8f0; line-height: 1.35; flex: 1; }
-    .doc-date { font-size: 11px; color: #64748b; white-space: nowrap; margin-top: 1px; font-variant-numeric: tabular-nums; }
+    .doc-card.has-link:active {
+      border-color: rgba(37,99,235,0.5);
+      background: rgba(255,255,255,0.07);
+    }
 
-    .doc-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 7px; }
-    .tag { font-size: 11px; border-radius: 6px; padding: 2px 7px; }
+    .doc-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 5px;
+      align-items: flex-start;
+    }
+
+    .doc-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #e2e8f0;
+      line-height: 1.35;
+      flex: 1;
+    }
+
+    .doc-date {
+      font-size: 11px;
+      color: #64748b;
+      white-space: nowrap;
+      margin-top: 1px;
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+    }
+
+    .doc-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 7px;
+    }
+
+    .tag {
+      font-size: 11px;
+      border-radius: 6px;
+      padding: 2px 7px;
+    }
+
     .tag-org  { background: rgba(37,99,235,0.18); color: #93c5fd; }
     .tag-type { background: rgba(255,255,255,0.06); color: #94a3b8; }
 
     .doc-desc {
-      font-size: 12px; color: #64748b; line-height: 1.5;
-      overflow: hidden; display: -webkit-box;
-      -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+      font-size: 12px;
+      color: #64748b;
+      line-height: 1.5;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      margin-bottom: 8px;
     }
 
-    .doc-link { margin-top: 7px; font-size: 11px; color: #3b82f6; }
+    .doc-links {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
 
-    #no-results { text-align: center; padding: 28px 0; color: #475569; font-size: 13px; display: none; }
+    .doc-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 9px;
+      border-radius: 6px;
+      text-decoration: none;
+      border: 1px solid;
+    }
+
+    .doc-link-btn.primary {
+      color: #3b82f6;
+      border-color: rgba(59,130,246,0.3);
+      background: rgba(59,130,246,0.1);
+    }
+
+    .doc-link-btn.secondary {
+      color: #94a3b8;
+      border-color: rgba(148,163,184,0.2);
+      background: rgba(148,163,184,0.06);
+    }
+
+    #no-results {
+      text-align: center;
+      padding: 28px 0;
+      color: #475569;
+      font-size: 13px;
+      display: none;
+    }
 
     #load-more-btn {
       width: 100%;
@@ -244,40 +340,44 @@
   <div id="external-section">
     <div class="section-label" style="margin-bottom:10px">Zoek ook op externe portalen</div>
     <a id="ext-mrdh" class="ext-link ext-mrdh" target="_blank" rel="noopener noreferrer">
-      <div><div class="ext-label">MRDH</div><div class="ext-sub">Metropoolregio Rotterdam Den Haag</div></div>
+      <div>
+        <div class="ext-label">MRDH</div>
+        <div class="ext-sub">Metropoolregio Rotterdam Den Haag · Notubiz</div>
+      </div>
       <div class="ext-arrow">↗</div>
     </a>
     <a id="ext-vra" class="ext-link ext-vra" target="_blank" rel="noopener noreferrer">
-      <div><div class="ext-label">VRA</div><div class="ext-sub">Vervoerregio Amsterdam</div></div>
+      <div>
+        <div class="ext-label">Vervoerregio Amsterdam</div>
+        <div class="ext-sub">iBabs publieksportaal</div>
+      </div>
       <div class="ext-arrow">↗</div>
     </a>
   </div>
 </div>
 
 <script>
-  const ORI_URL  = 'https://api.openraadsinformatie.nl/v1/elastic/ori_*/_search';
-  const PAGE_SIZE = 15;
+  var ORI_URL   = 'https://api.openraadsinformatie.nl/v1/elastic/ori_*/_search';
+  var PAGE_SIZE = 15;
 
-  let currentQuery = '';
-  let currentFrom  = 0;
-  let totalHits    = 0;
+  var currentQuery = '';
+  var currentFrom  = 0;
+  var totalHits    = 0;
 
-  const $ = id => document.getElementById(id);
-
-  const form           = $('search-form');
-  const input          = $('search-input');
-  const btn            = $('search-btn');
-  const loading        = $('loading');
-  const emptyState     = $('empty-state');
-  const errorBox       = $('error-box');
-  const resultsSection = $('results-section');
-  const resultsList    = $('results-list');
-  const resultCount    = $('result-count');
-  const noResults      = $('no-results');
-  const loadMoreBtn    = $('load-more-btn');
-  const extSection     = $('external-section');
-  const extMrdh        = $('ext-mrdh');
-  const extVra         = $('ext-vra');
+  var form           = document.getElementById('search-form');
+  var input          = document.getElementById('search-input');
+  var btn            = document.getElementById('search-btn');
+  var loading        = document.getElementById('loading');
+  var emptyState     = document.getElementById('empty-state');
+  var errorBox       = document.getElementById('error-box');
+  var resultsSection = document.getElementById('results-section');
+  var resultsList    = document.getElementById('results-list');
+  var resultCount    = document.getElementById('result-count');
+  var noResults      = document.getElementById('no-results');
+  var loadMoreBtn    = document.getElementById('load-more-btn');
+  var extSection     = document.getElementById('external-section');
+  var extMrdh        = document.getElementById('ext-mrdh');
+  var extVra         = document.getElementById('ext-vra');
 
   function esc(s) {
     return String(s || '')
@@ -291,7 +391,139 @@
       return new Intl.DateTimeFormat('nl-NL', {
         day: 'numeric', month: 'short', year: 'numeric'
       }).format(new Date(str));
-    } catch { return str.slice(0,10); }
+    } catch(e) { return str.slice(0,10); }
+  }
+
+  function getLinks(s) {
+    // Verzamel alle mogelijke URL-velden uit de ORI response
+    var links = [];
+
+    // 1. media_urls — bevat directe document-links (PDF etc.)
+    if (s.media_urls && s.media_urls.length) {
+      for (var i = 0; i < s.media_urls.length; i++) {
+        var mu = s.media_urls[i];
+        var url = mu.url || mu.original_url || null;
+        if (url) {
+          var label = mu.note || (mu.content_type && mu.content_type.indexOf('pdf') >= 0 ? 'PDF' : 'Document');
+          links.push({ url: url, label: label, primary: i === 0 });
+        }
+      }
+    }
+
+    // 2. sources — alternatief veld
+    if (!links.length && s.sources && s.sources.length) {
+      for (var j = 0; j < s.sources.length; j++) {
+        var src = s.sources[j];
+        if (src.url) links.push({ url: src.url, label: 'Bron', primary: j === 0 });
+      }
+    }
+
+    // 3. @id — linked data URI, soms een bruikbare web-URL
+    var atId = s['@id'] || s.id || null;
+    if (atId && atId.indexOf('http') === 0 && atId.indexOf('openraadsinformatie') < 0) {
+      links.push({ url: atId, label: 'Bekijk in RIS', primary: !links.length });
+    }
+
+    return links;
+  }
+
+  function makeCard(hit) {
+    var s     = hit._source || {};
+    var title = s.name || s.title || 'Onbekend document';
+    var org   = s.organization_name || null;
+    var date  = formatDate(s.start_date || s.date);
+    var type  = s.classification || null;
+    var desc  = s.description || null;
+    var links = getLinks(s);
+
+    var card = document.createElement('div');
+    card.className = 'doc-card' + (links.length ? ' has-link' : '');
+
+    // Bij één link: hele kaart is klikbaar
+    if (links.length === 1) {
+      card.addEventListener('click', function() {
+        window.open(links[0].url, '_blank', 'noopener,noreferrer');
+      });
+    }
+
+    var hasTags = org || (type && type !== title);
+
+    var linksHtml = '';
+    if (links.length === 1) {
+      linksHtml = '<div class="doc-links">'
+        + '<span class="doc-link-btn primary">↗ ' + esc(links[0].label) + '</span>'
+        + '</div>';
+    } else if (links.length > 1) {
+      linksHtml = '<div class="doc-links">';
+      for (var k = 0; k < links.length; k++) {
+        var l = links[k];
+        var cls = l.primary ? 'primary' : 'secondary';
+        linksHtml += '<a href="' + esc(l.url) + '" target="_blank" rel="noopener noreferrer" class="doc-link-btn ' + cls + '" onclick="event.stopPropagation()">↗ ' + esc(l.label) + '</a>';
+      }
+      linksHtml += '</div>';
+    }
+
+    card.innerHTML =
+      '<div class="doc-top">'
+        + '<div class="doc-title">' + esc(title) + '</div>'
+        + (date ? '<div class="doc-date">' + esc(date) + '</div>' : '')
+      + '</div>'
+      + (hasTags
+        ? '<div class="doc-tags">'
+            + (org ? '<span class="tag tag-org">' + esc(org) + '</span>' : '')
+            + (type && type !== title ? '<span class="tag tag-type">' + esc(type) + '</span>' : '')
+          + '</div>'
+        : '')
+      + (desc ? '<div class="doc-desc">' + esc(desc) + '</div>' : '')
+      + linksHtml;
+
+    return card;
+  }
+
+  function updateLoadMore() {
+    var remaining = totalHits - currentFrom;
+    if (remaining > 0) {
+      loadMoreBtn.textContent = 'Meer laden (' + remaining.toLocaleString('nl-NL') + ' resterend)';
+      loadMoreBtn.style.display = 'block';
+    } else {
+      loadMoreBtn.style.display = 'none';
+    }
+  }
+
+  function fetchORI(query, from, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', ORI_URL, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = function() {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        try {
+          var data = JSON.parse(xhr.responseText);
+          var hits  = (data.hits && data.hits.hits)  || [];
+          var total = (data.hits && data.hits.total && data.hits.total.value) || 0;
+          callback(null, { hits: hits, total: total });
+        } catch(e) {
+          callback(new Error('Kon response niet verwerken'));
+        }
+      } else {
+        callback(new Error('ORI API antwoordde met status ' + xhr.status));
+      }
+    };
+    xhr.onerror = function() {
+      callback(new Error('Netwerkfout — controleer je internetverbinding'));
+    };
+    xhr.send(JSON.stringify({
+      from: from,
+      size: PAGE_SIZE,
+      query: {
+        multi_match: {
+          query: query,
+          fields: ['text', 'name', 'description', 'title'],
+          type: 'best_fields'
+        }
+      },
+      sort: [{ start_date: { order: 'desc', unmapped_type: 'date' } }]
+      // _source weggelaten zodat we ALLE velden terugkrijgen incl. media_urls, sources, @id
+    }));
   }
 
   function setLoading(on) {
@@ -301,7 +533,7 @@
   }
 
   function showError(msg) {
-    errorBox.innerHTML = esc(msg);
+    errorBox.textContent = msg;
     errorBox.style.display = 'block';
   }
 
@@ -310,119 +542,52 @@
     errorBox.style.display = 'none';
   }
 
-  function makeCard(hit) {
-    const s     = hit._source || {};
-    const title = s.name || s.title || 'Onbekend document';
-    const org   = s.organization_name || null;
-    const date  = formatDate(s.start_date);
-    const type  = s.classification || null;
-    const desc  = s.description || null;
-    const url   = (s.media_urls && s.media_urls[0] && s.media_urls[0].url) || null;
-
-    const card = document.createElement('div');
-    card.className = 'doc-card' + (url ? ' clickable' : '');
-    if (url) card.addEventListener('click', () => window.open(url, '_blank'));
-
-    const hasTags = org || (type && type !== title);
-
-    card.innerHTML =
-      '<div class="doc-top">' +
-        '<div class="doc-title">' + esc(title) + '</div>' +
-        (date ? '<div class="doc-date">' + esc(date) + '</div>' : '') +
-      '</div>' +
-      (hasTags ?
-        '<div class="doc-tags">' +
-          (org ? '<span class="tag tag-org">' + esc(org) + '</span>' : '') +
-          (type && type !== title ? '<span class="tag tag-type">' + esc(type) + '</span>' : '') +
-        '</div>' : '') +
-      (desc ? '<div class="doc-desc">' + esc(desc) + '</div>' : '') +
-      (url  ? '<div class="doc-link">↗ Document openen</div>' : '');
-
-    return card;
-  }
-
-  function updateLoadMore() {
-    const remaining = totalHits - currentFrom;
-    if (remaining > 0) {
-      loadMoreBtn.textContent = 'Meer laden (' + remaining + ' resterend)';
-      loadMoreBtn.style.display = 'block';
-    } else {
-      loadMoreBtn.style.display = 'none';
-    }
-  }
-
-  async function fetchORI(query, from) {
-    const resp = await fetch(ORI_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        from: from,
-        size: PAGE_SIZE,
-        query: {
-          multi_match: {
-            query: query,
-            fields: ['text', 'name', 'description', 'title'],
-            type: 'best_fields'
-          }
-        },
-        sort: [{ start_date: { order: 'desc', unmapped_type: 'date' } }],
-        _source: ['name', 'description', 'start_date', 'organization_name', 'classification', 'media_urls']
-      })
-    });
-
-    if (!resp.ok) throw new Error('ORI API antwoordde met status ' + resp.status);
-    const data = await resp.json();
-    return {
-      total: (data.hits && data.hits.total && data.hits.total.value) || 0,
-      hits:  (data.hits && data.hits.hits) || []
-    };
-  }
-
-  async function doSearch(query, from) {
+  function doSearch(query, from) {
     clearError();
 
     if (from === 0) {
-      emptyState.style.display    = 'none';
+      emptyState.style.display     = 'none';
       resultsSection.style.display = 'none';
-      extSection.style.display    = 'none';
-      resultsList.innerHTML       = '';
-      noResults.style.display     = 'none';
-      loadMoreBtn.style.display   = 'none';
+      extSection.style.display     = 'none';
+      resultsList.innerHTML        = '';
+      noResults.style.display      = 'none';
+      loadMoreBtn.style.display    = 'none';
     }
 
     setLoading(true);
 
+    // Externe links: MRDH naar zoekpagina, VRA naar zoekpagina
     extMrdh.href = 'https://mrdh.notubiz.nl/zoeken?zoektekst=' + encodeURIComponent(query);
-    extVra.href  = 'https://vervoerregio.bestuurlijkeinformatie.nl/Vergaderingen/Index?q=' + encodeURIComponent(query);
+    extVra.href  = 'https://vervoerregio.bestuurlijkeinformatie.nl/Zoeken?query=' + encodeURIComponent(query);
 
-    try {
-      const result = await fetchORI(query, from);
+    fetchORI(query, from, function(err, result) {
+      setLoading(false);
+      extSection.style.display = 'block';
 
-      totalHits   = result.total;
-      currentFrom = from + result.hits.length;
+      if (err) {
+        showError('Fout: ' + err.message);
+        return;
+      }
+
+      totalHits    = result.total;
+      currentFrom  = from + result.hits.length;
       currentQuery = query;
 
       if (from === 0) {
-        resultCount.textContent = totalHits.toLocaleString('nl-NL') + ' gevonden';
+        resultCount.textContent      = totalHits.toLocaleString('nl-NL') + ' gevonden';
         resultsSection.style.display = 'block';
       }
 
       if (result.hits.length === 0 && from === 0) {
         noResults.style.display = 'block';
       } else {
-        result.hits.forEach(function(hit) {
-          resultsList.appendChild(makeCard(hit));
-        });
+        for (var i = 0; i < result.hits.length; i++) {
+          resultsList.appendChild(makeCard(result.hits[i]));
+        }
       }
 
       updateLoadMore();
-
-    } catch (e) {
-      showError('Fout bij ophalen: ' + e.message);
-    } finally {
-      setLoading(false);
-      extSection.style.display = 'block';
-    }
+    });
   }
 
   form.addEventListener('submit', function(e) {
